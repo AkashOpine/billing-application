@@ -1,0 +1,154 @@
+.login-form-wrapper {
+  padding: 3rem !important;
+  width: 75% !important;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.41px;
+  color: #000;
+  background: #ffffff99;
+  border: 1px solid #ffffff;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+  .done-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .doneIcon {
+      width: 94px;
+      height: 94px;
+    }
+  }
+  .login-title {
+    text-align: left;
+    margin-bottom: 18px;
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 42.19px;
+    text-align: left;
+    color: #000;
+  }
+
+  .login-subtitle {
+    text-align: left;
+    margin-bottom: 26px;
+    .Signup-link {
+      color: #0539F4;
+      text-decoration: none;
+    }
+  }
+  .warning-message {
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    color: #ff0808;
+    margin-bottom: 26px;
+  }
+  .input-group {
+    position: relative;
+  }
+  .form-label {
+    font-size: 16px;
+  }
+  .input-group .form-control {
+    border-radius: 8px !important;
+    border: 0.5px solid #A1A1A1;
+    height: 45px;
+  }
+  .input-group .form-control:focus {
+    border-color: #0539F4; /* Change this to your desired focus color */
+    outline: none; /* Optional: Removes the default browser outline */
+}
+ .icon-wrapper {
+    position: absolute;
+    right: 15px;
+    top: 9px;
+  
+  }
+  .form-check-label {
+    color: #878787;
+    font-size: 16px;
+  }
+  .forgot-password-link {
+    color: #0539F4;
+    text-decoration: none;
+    font-weight: 500;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+.custom-checkbox-height .form-check-label{
+  font-size: 14px;
+  margin-top: 2px;
+}
+.custom-checkbox-height input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+}
+
+  .login-button {
+    width: 100%;
+    background-color: #0539F4;
+    border: 0.5px solid #AEAEAE;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    font-weight: 600;
+    height: 38px;
+    font-size: 16px;
+    &:hover {
+      background-color: #0539F4;
+    }
+  }
+  .line-separation {
+    width: 100%;
+    text-align: center;
+    border-bottom: 0.5px solid #ebebeb;
+    line-height: 0.1em;
+    margin: 1rem 0rem;
+    span {
+      background:transparent;
+      color: #838383;
+      padding: 10px;
+    }
+  }
+  .stepper-div {
+    margin-top: 50px;
+  }
+  .back-login {
+    color: #949494;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+    span {
+      cursor: pointer;
+    }
+  }
+
+  .otp-input-group {
+    gap: 1rem;
+    
+    .otp-input {
+      box-shadow: 0px 1px 3px 1px #00000026;
+      box-shadow: 0px 1px 2px 0px #0000004d;
+      background: white;
+      text-align: center;
+      // min-height: 59px;
+      // min-width: 59px;
+      flex: 1;
+      font-size: 40px;
+      font-weight: 600;
+      line-height: 46.88px;
+      &:focus {
+        border: 1px solid #000000;
+        box-shadow: 0px 1px 3px 1px #00000026;
+
+        box-shadow: 0px 1px 2px 0px #0000004d;
+      }
+    }
+  }
+}

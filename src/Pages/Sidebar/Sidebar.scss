@@ -1,0 +1,114 @@
+.sidebar.collapsed .submenu,
+.sidebar.collapsed .hrms-text,
+.sidebar.collapsed .col-xs-10 {
+  display: none !important;
+}
+.sidebar.collapsed {
+  width: 80px; /* adjust as per your design */
+}
+.collapse-icon {
+ margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  width: 25px;
+  height: 23px;
+  border: 1px solid #a1a1a1;
+  align-items: center;
+  border-radius: 6px;
+}
+.sidebar {
+  background: #ffffff00;
+  // box-shadow: 1px 1px 20px 0px #00000012;
+  // padding-top: 90px;
+  width: 200px;
+  transition: width 0.3s ease;
+  border-right: 1px solid #00000012;
+  height: 100vh;
+  left: 0;
+  overflow-y: scroll;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 18.75px;
+  .icon-container {
+    padding: 0 0 32px 0;
+
+    .hrms-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+    .hrms-icon.collapsed {
+      width: 60px;
+      height: 25px; /* adjust as per your design */
+    }
+    .hrms-text {
+      /* font-family: "Sitka"; */
+      /* font-size: 25px; */
+      /* font-weight: 700; */
+      /* line-height: 31.26px; */
+      display: flex;
+      justify-content: center;
+      width: 25px;
+      height: 23px;
+      border: 1px solid #a1a1a1;
+      align-items: center;
+      border-radius: 6px;
+    }
+  }
+  .icon-container.collapsed {
+    display: flex;
+    flex-direction: column;
+  }
+  .sidebar-container {
+    padding: 20px 14px;
+  }
+  .row {
+    cursor: pointer;
+  }
+  .activemenu {
+    border: 0.5px solid #ffffff;
+    background: #ffffff80;
+    border-radius: 8px;
+    height: 41px;
+    align-items: center;
+    color: #652ae2;
+    font-weight: 500;
+  }
+  .submenu {
+    margin: 17px 19.5px 5px 17px;
+    border-left: 1px solid #d9d9d9;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    .active {
+      color: #652ae2 !important;
+      font-weight: 500;
+    }
+  }
+  .logout-option {
+    // display: flex;.
+    // height: 50px;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    padding: 20px 14px;
+    cursor: pointer;
+    align-items: center;
+    color: #000000;
+    img {
+      margin-right: 10px;
+    }
+    &:hover {
+      // height: 50px;
+      border-radius: 8px;
+      align-items: center;
+      color: #090909;
+      font-weight: 500;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+.home-layout {
+  padding-left: 220px; // sidebar width when expanded
+  min-height: 100vh;
+  font-family: "Roboto";
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+
+  transition: padding-left 0.3s ease;
+
+  .content {
+    padding: 10px 23px;
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+    justify-content: center;
+    transition: margin-left 0.3s ease;
+  }
+}
+
+.home-layout.collapsed {
+  padding-left: 80px; // sidebar collapsed width
+
+  
+}

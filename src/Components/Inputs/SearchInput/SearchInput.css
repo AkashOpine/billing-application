@@ -1,0 +1,27 @@
+.side-search-bar {
+  max-width: 460px;
+}
+.side-search-bar .input-group-text {
+  border-right: 0;
+  background: #fbfbfb;
+  color: #747474;
+  border-radius: 11px;
+  border: none;
+}
+.side-search-bar .form-control {
+  border-left: 0;
+  background: #fbfbfb;
+  color: #747474;
+  border-radius: 11px;
+  border: none;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 18.75px;
+}
+.side-search-bar .form-control:focus {
+  box-shadow: none;
+  outline: none;
+  border: none;
+  color: rgba(0, 0, 0, 0.6);
+  background: #fbfbfb;
+}/*# sourceMappingURL=SearchInput.css.map */
