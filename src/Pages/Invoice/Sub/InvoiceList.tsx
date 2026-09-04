@@ -36,6 +36,7 @@ import { ClearAddServiceField } from "../../../Redux/Api/Settings/action";
 import PayInvoiceModal from "./PayInvoiceModal";
 import { ClearCustByNum } from "../../../Redux/Api/Customer/action";
 import { SetFilters } from "../../../Redux/Common/Filter States/action";
+import DateRangeInput from "../../../Components/Inputs/Date Inputs/DateRangeInput";
 const today = new Date();
 const oneMonthAgo = new Date(today);
 oneMonthAgo.setMonth(today.getMonth() - 1);
@@ -69,35 +70,43 @@ function InvoiceList() {
   const [paymentMethod, setPaymentMethod] = useState("gpay");
 
   const InvoiceResponse: any = useSelector(
-    (state: any) => state.InvoiceReducers.GetInvoiceRes
+    (state: any) => state.InvoiceReducers.GetInvoiceRes,
   );
   const AddInvoiceResponse: any = useSelector(
-    (state: any) => state.InvoiceReducers.AddInvoiceRes
+    (state: any) => state.InvoiceReducers.AddInvoiceRes,
   );
   const EditInvoiceResponse: any = useSelector(
-    (state: any) => state.InvoiceReducers.EditInvoiceRes
+    (state: any) => state.InvoiceReducers.EditInvoiceRes,
   );
   const DeleteInvoiceResponse: any = useSelector(
-    (state: any) => state.InvoiceReducers.DeleteInvoiceRes
+    (state: any) => state.InvoiceReducers.DeleteInvoiceRes,
   );
   const InvoicePDFResponse: any = useSelector(
-    (state: any) => state.InvoiceReducers.GetInvoicePDF
+    (state: any) => state.InvoiceReducers.GetInvoicePDF,
   );
   const AddTransactionResponse: any = useSelector(
-    (state: any) => state.InvoiceReducers.AddTransactionRes
+    (state: any) => state.InvoiceReducers.AddTransactionRes,
   );
   const { fromDate, toDate } = useSelector(
-    (state: any) => state.FilterReducer.filters.dateRange || {}
+    (state: any) => state.FilterReducer.filters.dateRange || {},
   );
- 
 
-  // ✅ Handlers that dispatch Redux actions
   const handleFromDateChange = (newDate: string) => {
-    dispatch(SetFilters("dateRange", { fromDate: newDate, toDate }));
+    dispatch(
+      SetFilters("dateRange", {
+        fromDate: newDate,
+        toDate,
+      }),
+    );
   };
 
   const handleToDateChange = (newDate: string) => {
-    dispatch(SetFilters("dateRange", { fromDate, toDate: newDate }));
+    dispatch(
+      SetFilters("dateRange", {
+        fromDate,
+        toDate: newDate,
+      }),
+    );
   };
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -127,7 +136,7 @@ function InvoiceList() {
     setSelectedItems((prevSelected) =>
       prevSelected.includes(index)
         ? prevSelected.filter((item) => item !== index)
-        : [...prevSelected, index]
+        : [...prevSelected, index],
     );
   };
   const handleSelectAll = () => {
@@ -135,7 +144,7 @@ function InvoiceList() {
       setSelectedItems([]);
     } else {
       setSelectedItems(
-        InvoiceResponse?.content?.map((item: any) => item.invoiceId)
+        InvoiceResponse?.content?.map((item: any) => item.invoiceId),
       );
     }
     setIsSelectAllChecked(!isSelectAllChecked);
@@ -171,7 +180,7 @@ function InvoiceList() {
       DeleteInvoice({
         id: selectedId,
         userId: SessionData?.user?.id,
-      }) as any
+      }) as any,
     );
     setShowDeleteModal(false);
     setSelectedId(null);
@@ -213,7 +222,7 @@ function InvoiceList() {
         size: perPage,
         toDate: toDate,
         fromDate: fromDate,
-      }) as any
+      }) as any,
     );
   }, [
     AddInvoiceResponse,
@@ -233,12 +242,18 @@ function InvoiceList() {
         <ContentHeading>Invoice</ContentHeading>
         <div className="d-flex gap-3">
           <TableSearch value={searchTerm} onChange={handleSearch} />
-          <FilterDropdown
+          <DateRangeInput
             fromDate={fromDate}
             toDate={toDate}
             onFromDateChange={handleFromDateChange}
             onToDateChange={handleToDateChange}
           />
+          {/* <FilterDropdown
+            fromDate={fromDate}
+            toDate={toDate}
+            onFromDateChange={handleFromDateChange}
+            onToDateChange={handleToDateChange}
+          /> */}
           <IconButton icon={GoPlus} bg="#0539f4" onClick={AddInvoice}>
             New
           </IconButton>
@@ -260,61 +275,83 @@ function InvoiceList() {
                   <th></th>
                 </tr>
               </CustomMDBTableHead>
+
               <StyledMDBTableBody>
-                {InvoiceResponse?.content?.map((item: any, index: number) => (
-                  <tr key={index}>
-                    <td>{item.invoiceNumber}</td>
-                    <td>{item.customerName}</td>
-                    <td>{item.customerPhone}</td>
-                    {/* <td>{item.expectedDeliveryDate}</td> */}
+                {InvoiceResponse?.content?.length > 0 ? (
+                  InvoiceResponse.content.map((item: any, index: number) => (
+                    <tr key={index}>
+                      <td>{item.invoiceNumber}</td>
+                      <td>{item.customerName}</td>
+                      <td>{item.customerPhone}</td>
 
-                    <td style={{ fontWeight: "600" }}>
-                      {item.invoiceGrandTotal}
-                    </td>
-                    <td style={{ fontWeight: "600" }}>
-                      {item.invoiceAmountPaid}
-                    </td>
-                    <td style={{ color: "#d946ef" }}>
-                      {item.invoiceAmountBalance}
-                    </td>
-                    <td>
-                      <StatusBox status={item.invoicePaidStatusDescription}>
-                        {item.invoicePaidStatusDescription}
-                      </StatusBox>
-                    </td>
-                    <td>
-                      {item.invoicePaidStatusDescription === "Pending" ||
-                      item.invoicePaidStatusDescription === "Partial" ||
-                      item.invoicePaidStatusDescription ===
-                        "Payment Pending" ? (
-                        <PayButton
-                          onClick={() =>
-                            openModal({
-                              invoiceId: item.invoiceId,
-                              invoiceNumber: item.invoiceNumber,
-                              customerName: item.customerName,
-                              dueAmount: item.invoiceAmountBalance,
-                              customerId: item.customerId,
-                            })
+                      <td style={{ fontWeight: "600" }}>
+                        {item.invoiceGrandTotal}
+                      </td>
+
+                      <td style={{ fontWeight: "600" }}>
+                        {item.invoiceAmountPaid}
+                      </td>
+
+                      <td style={{ color: "#d946ef" }}>
+                        {item.invoiceAmountBalance}
+                      </td>
+
+                      <td>
+                        <StatusBox status={item.invoicePaidStatusDescription}>
+                          {item.invoicePaidStatusDescription}
+                        </StatusBox>
+                      </td>
+
+                      <td>
+                        {item.invoicePaidStatusDescription === "Pending" ||
+                        item.invoicePaidStatusDescription === "Partial" ||
+                        item.invoicePaidStatusDescription ===
+                          "Payment Pending" ? (
+                          <PayButton
+                            onClick={() =>
+                              openModal({
+                                invoiceId: item.invoiceId,
+                                invoiceNumber: item.invoiceNumber,
+                                customerName: item.customerName,
+                                dueAmount: item.invoiceAmountBalance,
+                                customerId: item.customerId,
+                              })
+                            }
+                          >
+                            Pay
+                          </PayButton>
+                        ) : (
+                          ""
+                        )}
+                      </td>
+
+                      <td></td>
+
+                      <td style={{ textAlign: "end" }}>
+                        <ActionDropdown
+                          onEdit={() => handleEdit(item.invoiceId)}
+                          onDelete={() => handleDeleteClick(item.invoiceId)}
+                          onPdfDownload={() =>
+                            handlePDFDownload(item.invoiceId)
                           }
-                        >
-                          Pay
-                        </PayButton>
-                      ) : (
-                        ""
-                      )}
-                    </td>
-
-                    <td></td>
-                    <td style={{ textAlign: "end" }}>
-                      <ActionDropdown
-                        onEdit={() => handleEdit(item.invoiceId)}
-                        onDelete={() => handleDeleteClick(item.invoiceId)}
-                        onPdfDownload={() => handlePDFDownload(item.invoiceId)}
-                      />
+                        />
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td
+                      colSpan={columnDef?.length + 1}
+                      style={{
+                        textAlign: "center",
+                        padding: "40px 0",
+                        color: "#6b7280",
+                      }}
+                    >
+                      No data found
                     </td>
                   </tr>
-                ))}
+                )}
               </StyledMDBTableBody>
             </StyledMDBTable>
 
