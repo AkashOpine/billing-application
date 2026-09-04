@@ -238,7 +238,7 @@ function AddPurchase() {
       });
       setSelectedPaymentStatus(GetPurchaseDetails?.poPaidStatusDescription);
       setSelectedPayment(GetPurchaseDetails?.poPaymentType);
-      const url = `https://tomcat.opine.co.in/billing-app-0.0.1-SNAPSHOT/api/v1/${GetPurchaseDetails?.poInvoiceFilePath}`;
+      const url = `https://tomcat.opine.co.in/billing-app-test-0.0.1-SNAPSHOT/api/v1/${GetPurchaseDetails?.poInvoiceFilePath}`;
 
       fetch(url)
         .then((res) => res.blob())

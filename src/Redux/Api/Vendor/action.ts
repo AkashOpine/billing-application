@@ -157,7 +157,7 @@ export const ClearVendorByPhone = () => ({
   type: actionTypes.CLEAR_VENDOR_BY_PHONE,
 });
 
-// https://tomcat.opine.co.in/billing-app-0.0.1-SNAPSHOT/api/v1/purchase-order/org?org_id=1&branch_id=0&page=1&size=10&sort=poId,desc&searchText=&vendorId=2
+// https://tomcat.opine.co.in/billing-app-test-0.0.1-SNAPSHOT/api/v1/purchase-order/org?org_id=1&branch_id=0&page=1&size=10&sort=poId,desc&searchText=&vendorId=2
 export const GetPurchaseByVendor = (data: any) => (dispatch: any) => {
   billingAPI
     .get(

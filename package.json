@@ -1,6 +1,6 @@
 {
-  "name": "billing-app",
-  "homepage": "/billing-app",
+  "name": "billing-app-test",
+  "homepage": "/billing-app-test",
   "private": true,
   "version": "0.0.0",
   "type": "module",

@@ -9,6 +9,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { ForgotPasswordAction } from "../../Redux/Api/Authentication/action";
+
 function ForgotPassword() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -17,14 +18,13 @@ function ForgotPassword() {
   );
   const [email, setEmail] = useState<string>("");
   const [error, setError] = useState<string>("");
+
   const handleForgot = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (!email) {
       setError("Please fill email");
       return;
     }
-
     try {
       dispatch(ForgotPasswordAction({ email: email }) as any);
     } catch (error) {
@@ -35,9 +35,12 @@ function ForgotPassword() {
     if (ForgotResponse) {
       // console.log(ForgotResponse,'ForgotResponse')
       if (ForgotResponse?.code === 200 && ForgotResponse?.status === "Sucess") {
-        navigate(`/reset-password?email=${encodeURIComponent(email)}`)
-      } else if (ForgotResponse?.code === 200 && ForgotResponse?.status === "Failed") {
-        setError(ForgotResponse?.data)
+        navigate(`/reset-password?email=${encodeURIComponent(email)}`);
+      } else if (
+        ForgotResponse?.code === 200 &&
+        ForgotResponse?.status === "Failed"
+      ) {
+        setError(ForgotResponse?.data);
       }
     }
   }, [ForgotResponse]);
@@ -67,7 +70,6 @@ function ForgotPassword() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-           
             </InputGroup>
           </Form.Group>
 

@@ -4,20 +4,20 @@ import { ApiURL, BaseName } from './BaseUrl';
 
 
 export const loginAPI = axios.create({
-  baseURL: ApiURL+"billing-app-0.0.1-SNAPSHOT/master/api/public/v1/",
+  baseURL: ApiURL+"billing-app-test-0.0.1-SNAPSHOT/master/api/public/v1/",
   headers: { Accept: "application/json" },
 });
 
 export const masterAPI = axios.create({
-  baseURL: ApiURL+"billing-app-0.0.1-SNAPSHOT/master/api/v1/",
+  baseURL: ApiURL+"billing-app-test-0.0.1-SNAPSHOT/master/api/v1/",
   headers: { Accept: "application/json" },
 });
 
 export const billingAPI = axios.create({
-  baseURL: ApiURL+"billing-app-0.0.1-SNAPSHOT/api/v1/",
+  baseURL: ApiURL+"billing-app-test-0.0.1-SNAPSHOT/api/v1/",
   headers: { Accept: "application/json" },
 });
-// https://tomcat.opine.co.in/billing-app-0.0.1-SNAPSHOT/
+// https://tomcat.opine.co.in/billing-app-test-0.0.1-SNAPSHOT/
 const setupInterceptors = (instance : any) => {
   instance.interceptors.request.use(
     (config : any) => {

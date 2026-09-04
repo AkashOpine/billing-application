@@ -156,6 +156,7 @@ function AddInvoice() {
 
   const [phoneSuggestion, setPhoneSuggestion] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("gpay");
+  const [showBalanceInput, setShowBalanceInput] = useState(false);
 
   const [isReceivedChecked, setIsReceivedChecked] = useState(false);
   const [paidAmount, setPaidAmount] = useState("");
@@ -175,15 +176,15 @@ function AddInvoice() {
     sgst: 0,
     igst: 0,
   });
+
   const [balanceDue, setBalanceDue] = useState(0);
+  const [balanceDueAmt, setBalanceDueAmt] = useState(0);
+  const [receivedAmount, setReceivedAmount] = useState(0);
+
   const [taxMode, setTaxMode] = useState("exclusive"); // default
 
   const InvNumber = watch("invoiceNo");
   const CustName = watch("custName");
-
-  useEffect(() => {
-    console.log("CustName", CustName);
-  }, [CustName]);
 
   const CustomerResponse: any = useSelector(
     (state: any) => state.CustomerReducers.GetCustomerList
@@ -283,9 +284,6 @@ function AddInvoice() {
 
   // const discount = Number(watch("discount") || 0);
   // const tax = Number(taxDetails?.percentage || 0);
-  const receivedAmount = id
-    ? InoviceDetails?.invoiceAmountPaid
-    : Number(paidAmount || 0);
 
   // Calculate subtotal
   const subtotal = items.reduce((acc, item) => {
@@ -302,6 +300,31 @@ function AddInvoice() {
 
   // Net amount = grandTotal
   const netAmount = grandTotal;
+  useEffect(() => {
+    const value = id
+      ? showBalanceInput
+        ? grandTotal - balanceDue
+        : InoviceDetails?.invoiceAmountPaid
+      : showBalanceInput
+      ? netAmount - balanceDue
+      : Number(paidAmount || 0);
+
+    setReceivedAmount(value);
+  }, [
+    id,
+    showBalanceInput,
+    grandTotal,
+    balanceDue,
+    InoviceDetails?.invoiceAmountPaid,
+    netAmount,
+    paidAmount,
+  ]);
+
+  useEffect(() => {
+    if (id && balanceDue < 0) {
+      setShowBalanceInput(true);
+    }
+  }, [balanceDue]);
 
   useEffect(() => {
     if (id) {
@@ -313,9 +336,9 @@ function AddInvoice() {
         setBalanceDue(InoviceDetails?.invoiceAmountBalance);
       }
     } else {
-      setBalanceDue(netAmount - receivedAmount);
+      setBalanceDue(netAmount - Number(paidAmount || 0));
     }
-  }, [grandTotal, InoviceDetails, netAmount, receivedAmount]);
+  }, [grandTotal, InoviceDetails, netAmount, paidAmount]);
 
   const handleOpenCreateCdModal = () => {
     setShowCreateCdModal(true);
@@ -683,7 +706,9 @@ function AddInvoice() {
         invoiceGrandTotal: Number(grandTotal.toFixed(2)),
 
         invoiceAmountPaid: Number(receivedAmount.toFixed(2)),
-        invoiceAmountBalance: Number(balanceDue.toFixed(2)),
+        invoiceAmountBalance: showBalanceInput
+          ? Number(balanceDueAmt.toFixed(2))
+          : Number(balanceDue.toFixed(2)),
 
         invoiceNotes: data.notes,
 
@@ -771,6 +796,8 @@ function AddInvoice() {
 
       dispatch(AddInvoiceData(payload) as any);
     }
+    setShowBalanceInput(false);
+    setBalanceDue(0);
     navigate(-1);
   };
   useEffect(() => {
@@ -1056,7 +1083,24 @@ function AddInvoice() {
               <StyledRow>
                 <SummaryDetailsDiv>
                   <Label style={{ color: "#d633ff" }}>Balance Due</Label>
-                  <Value style={{ color: "#d633ff" }}>₹ {balanceDue}</Value>
+
+                  {showBalanceInput ? (
+                    <input
+                      type="number"
+                      value={balanceDue}
+                      onChange={(e) => setBalanceDue(Number(e.target.value))}
+                      style={{
+                        color: "#d633ff",
+                        border: "1px solid #d633ff",
+                        padding: "6px 10px",
+                        borderRadius: "6px",
+                        width: "120px",
+                        background: "transparent",
+                      }}
+                    />
+                  ) : (
+                    <Value style={{ color: "#d633ff" }}>₹ {balanceDue}</Value>
+                  )}
                 </SummaryDetailsDiv>
               </StyledRow>
             )}
@@ -1103,6 +1147,8 @@ function AddInvoice() {
               color="#0539f4"
               onClick={() => {
                 navigate(-1);
+                setShowBalanceInput(false);
+                setBalanceDue(0);
               }}
             >
               Cancel
@@ -1127,6 +1173,8 @@ function AddInvoice() {
                 color="#0539f4"
                 onClick={() => {
                   navigate(-1);
+                  setShowBalanceInput(false);
+                  setBalanceDue(0);
                 }}
               >
                 Cancel

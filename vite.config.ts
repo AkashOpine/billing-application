@@ -4,7 +4,7 @@ import sass from "sass";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: "/billing-app",
+  base: "/billing-app-test",
   css: {
     preprocessorOptions: {
       scss: {
